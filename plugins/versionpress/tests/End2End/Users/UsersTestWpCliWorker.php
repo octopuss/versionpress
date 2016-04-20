@@ -111,6 +111,8 @@ class UsersTestWpCliWorker extends WpCliWorker implements IUsersTestWorker {
         var_dump($users);
         $userLogins = array_map(function ($user) { return $user->user_login; }, $users);
         $usersForBulkTests = array_filter($userLogins, function ($login) { return Strings::startsWith($login, 'bulk_'); });
+        if(count($usersForBulkTests) > 0) {
         $this->wpAutomation->runWpCliCommand('user', 'delete', array_merge($usersForBulkTests, array('yes' => null)));
+    }
     }
 }
