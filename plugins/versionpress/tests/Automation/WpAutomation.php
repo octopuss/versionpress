@@ -263,6 +263,7 @@ class WpAutomation {
      */
     public function deleteUser($id) {
         $args = array($id, 'yes' => null);
+        var_dump($args);
         $this->runWpCliCommand('user', 'delete', $args);
     }
 

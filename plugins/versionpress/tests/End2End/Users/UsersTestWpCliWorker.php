@@ -28,6 +28,7 @@ class UsersTestWpCliWorker extends WpCliWorker implements IUsersTestWorker {
 
     public function createUser() {
         $this->userId = $this->wpAutomation->createUser($this->testUser);
+        echo "created user " . $this->userId;
     }
 
     public function prepare_editUser() {
@@ -38,6 +39,7 @@ class UsersTestWpCliWorker extends WpCliWorker implements IUsersTestWorker {
 
     public function editUser() {
         $this->wpAutomation->editUser($this->userId, array('user_email' => $this->originalEmail));
+         echo "edited user " . $this->userId;
     }
 
     public function prepare_editUsermeta() {
@@ -47,6 +49,7 @@ class UsersTestWpCliWorker extends WpCliWorker implements IUsersTestWorker {
 
     public function editUsermeta() {
         $this->wpAutomation->runWpCliCommand('user', 'meta', array('update', $this->userId, 'first_name', $this->originalFirstName));
+         echo "edited usermeta " . $this->userId;
     }
 
     function prepare_deleteUsermeta() {
@@ -55,6 +58,7 @@ class UsersTestWpCliWorker extends WpCliWorker implements IUsersTestWorker {
 
     public function deleteUsermeta() {
         $this->wpAutomation->runWpCliCommand('user', 'meta', array('delete', $this->userId, 'last_name'));
+         echo "deleted usermeta " . $this->userId;
     }
 
     public function prepare_deleteUser() {
@@ -62,6 +66,7 @@ class UsersTestWpCliWorker extends WpCliWorker implements IUsersTestWorker {
 
     public function deleteUser() {
         $this->wpAutomation->deleteUser($this->userId);
+         echo "deleted user " . $this->userId;
     }
 
     public function prepare_editTwoUsers() {
