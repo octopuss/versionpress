@@ -9,9 +9,7 @@ php:
 env:
   matrix:
     # nightly:
-    - WP_VERSION=nightly 
-    # latest stable:
-    - WP_VERSION=latest
+    - WP_VERSION=4.4 
   global:
     - WP_CORE_DIR=/tmp/wordpress
     - WP_TESTS_DIR=/tmp/wordpress-tests-lib
