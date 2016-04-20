@@ -87,6 +87,8 @@ class UsersTestWpCliWorker extends WpCliWorker implements IUsersTestWorker {
 
     public function deleteTwoUsers() {
         $this->wpAutomation->runWpCliCommand('user', 'delete', array_merge($this->userId, array('yes' => null)));
+
+        print_r($this->userId);
     }
 
     private function prepareTestUser() {
