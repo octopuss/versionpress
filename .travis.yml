@@ -1,0 +1,38 @@
+# run on container environment
+sudo: false
+
+language: php
+
+php:
+  - '5.6'
+  
+env:
+  matrix:
+    # nightly:
+    - WP_VERSION=nightly 
+    # latest stable:
+    - WP_VERSION=latest
+  global:
+    - WP_CORE_DIR=/tmp/wordpress
+    - WP_TESTS_DIR=/tmp/wordpress-tests-lib
+    - DB_NAME=wordpress_test
+    - DB_USER=root
+    - DB_PASSWORD=''
+    - WP_MULTISITE=0
+
+install:
+  - nvm install node
+  - npm install
+before_script:
+  - bash plugins/versionpress/tests/install-wp-tests.sh $DB_NAME $DB_USER "$DB_PASSWORD" localhost $WP_VERSION 
+  - npm install -g gulp
+  - npm install gulp
+  - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
+  
+  - 'sed -i.bak -e "s/end2end-test-type: .*/end2end-test-type: wp-cli/" plugins/versionpress/tests/test-config.yml'
+  - 'sed -i.bak -e "s/dbname: .*/dbname: $DB_NAME/" plugins/versionpress/tests/test-config.yml'
+  - 'sed -i.bak -e "s/user: .*/user: $DB_USER/" plugins/versionpress/tests/test-config.yml'
+  - 'sed -i.bak -e "s/password: .*/password: $DB_PASSWORD/" plugins/versionpress/tests/test-config.yml'
+  - 'sed -i.bak -e "s#path: .*#path: $WP_CORE_DIR#" plugins/versionpress/tests/test-config.yml'
+
+script: gulp --cwd plugins/versionpress/tests run-tests
