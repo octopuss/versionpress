@@ -20,7 +20,7 @@ env:
 before_install:
   - git config --global github.accesstoken $GITHUB_OAUTH_TOKEN
   - composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN
-  - echo "{ \"token\": \"${GITHUB_OAUTH_TOKEN}\" }" >> frontend/.tsdrc
+  - echo '{ "token": "${GITHUB_OAUTH_TOKEN}"}' >> frontend/.tsdrc
 install:
   - composer install
   - nvm install node
