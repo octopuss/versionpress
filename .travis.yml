@@ -21,6 +21,8 @@ before_install:
   - git config --global github.accesstoken $GITHUB_OAUTH_TOKEN
   - composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN --no-interaction
   - 'echo "{ \"token\": \"${GITHUB_OAUTH_TOKEN}\"}" >> frontend/.tsdrc'
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
 install:
   - composer install -d ./plugins/versionpress
   - nvm install node
