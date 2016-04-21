@@ -34,8 +34,6 @@ install:
   - npm install
 before_script:
   - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
-  - sudo sed -i -e "s,/var/www,/tmp/wordpress,g" /etc/apache2/sites-available/default
-  - sudo /etc/init.d/apache2 restart
 #  - sudo a2enmod rewrite
   # enable php-fpm
   # configure apache virtual hosts
@@ -52,6 +50,8 @@ before_script:
   - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
   - curl http://localhost/wordpress
   - chmod -R 777 $WP_CORE_DIR
+  - sudo sed -i -e "s,/var/www,$WP_CORE_DIR,g" /etc/apache2/sites-available/default
+  - sudo /etc/init.d/apache2 restart
   - ls -la $WP_CORE_DIR
   
   - 'sed -i.bak -e "s/end2end-test-type: .*/end2end-test-type: wp-cli/" plugins/versionpress/tests/test-config.yml'
