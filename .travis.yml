@@ -1,5 +1,5 @@
 # run on container environment
-sudo: false
+sudo: required
 
 language: php
 
