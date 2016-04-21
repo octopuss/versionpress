@@ -3,6 +3,9 @@ sudo: required
 
 language: php
 
+services:
+  - mysql
+
 cache:
   directories:
     - node_modules
@@ -21,6 +24,7 @@ env:
     - DB_NAME=wordpress_test
     - DB_USER=root
     - DB_PASSWORD=''
+    - DB=mysql
     - WP_MULTISITE=0
 before_install:
   - git config --global github.accesstoken $GITHUB_OAUTH_TOKEN
@@ -33,26 +37,24 @@ install:
   - npm install
 before_script:
   - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
-#  - sudo a2enmod rewrite
-  # enable php-fpm
-  # configure apache virtual hosts
-#  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
-#  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
-#  - sudo service apache2 restart
+  - mysql -e "create database IF NOT EXISTS $DB_NAME;" -uroot;
   #wpcli node etc.
   - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   - chmod +x wp-cli.phar
   - sudo mv wp-cli.phar /usr/local/bin/wp
-  - bash build/install-wp-tests.sh $DB_NAME $DB_USER "$DB_PASSWORD" localhost $WP_VERSION 
+  - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
+  - wp core download
+  - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=localhost --path=$WP_CORE_DIR --skip-check
+  - wp core install --url="http://localhost/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR
   - npm install -g gulp
   - npm install gulp
-  - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
   #- chmod -R 777 $WP_CORE_DIR
   - sudo sed -i -e "s,/var/www,$WP_CORE_DIR,g" /etc/apache2/sites-available/default
   - sudo /etc/init.d/apache2 restart
   - ls -la $WP_CORE_DIR
   - curl http://localhost/wordpress
   - cp $WP_CORE_DIR/wp-config-sample.php $WP_CORE_DIR/wp-config.php
+  - wp core download --path $WP_CORE_DIR
   - wp plugin activate --path=$WP_CORE_DIR versionpress
   - wp vp activate --yes --path=$WP_CORE_DIR
   
