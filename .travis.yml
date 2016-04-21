@@ -6,7 +6,7 @@ language: php
 cache:
   directories:
     - node_modules
-    - vendor
+    - plugins/versionpress/vendor
 
 php:
   - '5.6'
