@@ -1,8 +1,8 @@
 <VirtualHost *:80>
  
-  DocumentRoot /tmp
+  DocumentRoot /
 
-  <Directory "/tmp">
+  <Directory "/tmp/wordpress">
     Options FollowSymLinks MultiViews ExecCGI
     AllowOverride All
     Order deny,allow
