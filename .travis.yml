@@ -45,11 +45,11 @@ install:
   - npm install -g gulp
   - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
   
-  - cp plugins/versionpress/src $WP_CORE_DIR/wp-content/plugins/versionpress/src
-  - cp plugins/versionpress/admin $WP_CORE_DIR/wp-content/plugins/versionpress/admin
-  - cp plugins/versionpress/temp $WP_CORE_DIR/wp-content/plugins/versionpress/temp
-  - cp plugins/versionpress/log $WP_CORE_DIR/wp-content/plugins/versionpress/log
-  - cp plugins/versionpress/vendor $WP_CORE_DIR/wp-content/plugins/versionpress/vendor
+  - cp -r plugins/versionpress/src $WP_CORE_DIR/wp-content/plugins/versionpress/src
+  - cp -r plugins/versionpress/admin $WP_CORE_DIR/wp-content/plugins/versionpress/admin
+  - cp -r plugins/versionpress/temp $WP_CORE_DIR/wp-content/plugins/versionpress/temp
+  - cp -r plugins/versionpress/log $WP_CORE_DIR/wp-content/plugins/versionpress/log
+  - cp -r plugins/versionpress/vendor $WP_CORE_DIR/wp-content/plugins/versionpress/vendor
   - cp plugins/versionpress/uninstall.php $WP_CORE_DIR/wp-content/plugins/versionpress/uninstall.php
   - cp plugins/versionpress/bootstrap.php $WP_CORE_DIR/wp-content/plugins/versionpress/bootstrap.php
   - cp plugins/versionpress/versionpress.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress.php
