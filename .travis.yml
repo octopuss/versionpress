@@ -45,17 +45,17 @@ install:
   - npm install -g gulp
   - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
   
-  - cp -R plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
-  - cp -R plugins/versionpress/admin/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/
-  - cp -R plugins/versionpress/temp/ $WP_CORE_DIR/wp-content/plugins/versionpress/temp/
-  - cp -R plugins/versionpress/log/ $WP_CORE_DIR/wp-content/plugins/versionpress/log/
-  - cp -R plugins/versionpress/vendor/ $WP_CORE_DIR/wp-content/plugins/versionpress/vendor/
+  - cp -rip plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
+  - cp -rip plugins/versionpress/admin/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/
+  - cp -rip plugins/versionpress/temp/ $WP_CORE_DIR/wp-content/plugins/versionpress/temp/
+  - cp -rip plugins/versionpress/log/ $WP_CORE_DIR/wp-content/plugins/versionpress/log/
+  - cp -rip plugins/versionpress/vendor/ $WP_CORE_DIR/wp-content/plugins/versionpress/vendor/
   - cp plugins/versionpress/uninstall.php $WP_CORE_DIR/wp-content/plugins/versionpress/uninstall.php
   - cp plugins/versionpress/bootstrap.php $WP_CORE_DIR/wp-content/plugins/versionpress/bootstrap.php
   - cp plugins/versionpress/versionpress.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress.php
   - cp plugins/versionpress/versionpress-functions.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress-functions.php
 
-  - cp -R frontend/build/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/public/gui/
+  - cp -rip frontend/build/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/public/gui/
 
   - wp plugin activate --path=$WP_CORE_DIR versionpress
   - wp vp activate --yes --path=$WP_CORE_DIR
