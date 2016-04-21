@@ -26,6 +26,8 @@ install:
   - nvm install node
   - npm install
 before_script:
+  - 'echo "display_errors = on" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini'
+  - 'echo "display_startup_errors = on" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini'
   - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   - chmod +x wp-cli.phar
   - sudo mv wp-cli.phar /usr/local/bin/wp
