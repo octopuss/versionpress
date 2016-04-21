@@ -29,17 +29,19 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 install:
-  - composer install -d ./plugins/versionpress
+  - composer install -d ./plugins/versionpress -dev --prefer-dist
   - nvm install node
   - npm install
 before_script:
-  - sudo apt-get install apache2
-  - sudo a2enmod rewrite
+  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
+  - sudo sed -i -e "s,/var/www,tmp/wordpress,g" /etc/apache2/sites-available/default
+  - sudo /etc/init.d/apache2 restart
+#  - sudo a2enmod rewrite
   # enable php-fpm
   # configure apache virtual hosts
-  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
-  - sudo service apache2 restart
+#  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
+#  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+#  - sudo service apache2 restart
   #wpcli node etc.
   - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   - chmod +x wp-cli.phar
@@ -49,7 +51,8 @@ before_script:
   - npm install gulp
   - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
   - curl http://localhost/wordpress
-  - ls /tmp/wordpress
+  - chmod -R 777 $WP_CORE_DIR
+  - ls -la $WP_CORE_DIR
   
   - 'sed -i.bak -e "s/end2end-test-type: .*/end2end-test-type: wp-cli/" plugins/versionpress/tests/test-config.yml'
   - 'sed -i.bak -e "s/dbname: .*/dbname: $DB_NAME/" plugins/versionpress/tests/test-config.yml'
