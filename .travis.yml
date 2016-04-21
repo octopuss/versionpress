@@ -44,7 +44,7 @@ install:
   - wp core install --url="http://localhost/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR
   - npm install -g gulp
   - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
-  - gulp test-deploy
+  - sudo gulp test-deploy
   - wp plugin activate --path=$WP_CORE_DIR versionpress
   - wp vp activate --yes --path=$WP_CORE_DIR
   - sudo sed -i -e "s,/var/www,$WP_CORE_DIR,g" /etc/apache2/sites-available/default
