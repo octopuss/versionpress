@@ -29,7 +29,6 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 install:
-  - composer install -d ./plugins/versionpress -dev --prefer-dist
   - nvm install node
   - npm install
 before_script:
@@ -53,8 +52,8 @@ before_script:
   - sudo /etc/init.d/apache2 restart
   - ls -la $WP_CORE_DIR
   - curl http://localhost/wordpress
-  - wp plugin activate --path='$WP_CORE_DIR' versionpress
-  - wp vp activate --yes --path='$WP_CORE_DIR'
+  - wp plugin activate --path=$WP_CORE_DIR versionpress
+  - wp vp activate --yes --path=$WP_CORE_DIR
   
   - 'sed -i.bak -e "s/end2end-test-type: .*/end2end-test-type: wp-cli/" plugins/versionpress/tests/test-config.yml'
   - 'sed -i.bak -e "s/dbname: .*/dbname: $DB_NAME/" plugins/versionpress/tests/test-config.yml'
