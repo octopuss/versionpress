@@ -23,6 +23,9 @@ install:
   - nvm install node
   - npm install
 before_script:
+  - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+  - chmod +x wp-cli.phar
+  - sudo mv wp-cli.phar /usr/local/bin/wp
   - bash plugins/versionpress/tests/install-wp-tests.sh $DB_NAME $DB_USER "$DB_PASSWORD" localhost $WP_VERSION 
   - npm install -g gulp
   - npm install gulp
