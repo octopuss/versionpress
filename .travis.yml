@@ -3,6 +3,10 @@ sudo: required
 
 language: php
 
+cache:
+  directories:
+    - node_modules
+
 php:
   - '5.6'
   
@@ -11,8 +15,8 @@ env:
     # nightly:
     - WP_VERSION=4.4 
   global:
-    - WP_CORE_DIR=/tmp/wordpress
-    - WP_TESTS_DIR=/tmp/wordpress-tests-lib
+    - WP_CORE_DIR=/home/www/wordpress
+    - WP_TESTS_DIR=/home/www/wordpress-tests-lib
     - DB_NAME=wordpress_test
     - DB_USER=root
     - DB_PASSWORD=''
@@ -28,12 +32,22 @@ install:
   - nvm install node
   - npm install
 before_script:
-  - echo 'display_errors = on' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - echo 'display_startup_errors = on' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  - sudo a2enmod rewrite
+  # enable php-fpm
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # configure apache virtual hosts
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo service apache2 restart
   - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   - chmod +x wp-cli.phar
   - sudo mv wp-cli.phar /usr/local/bin/wp
-  - bash plugins/versionpress/tests/install-wp-tests.sh $DB_NAME $DB_USER "$DB_PASSWORD" localhost $WP_VERSION 
+  - bash build/install-wp-tests.sh $DB_NAME $DB_USER "$DB_PASSWORD" localhost $WP_VERSION 
   - npm install -g gulp
   - npm install gulp
   - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
