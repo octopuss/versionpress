@@ -22,7 +22,7 @@ before_install:
   - composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN
   - 'echo "{ \"token\": \"${GITHUB_OAUTH_TOKEN}\"}" >> frontend/.tsdrc'
 install:
-  - composer install -d plugins/versionpress/src
+  - composer install -d ./plugins/versionpress
   - nvm install node
   - npm install
 before_script:
