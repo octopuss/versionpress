@@ -52,6 +52,7 @@ before_script:
   - sudo /etc/init.d/apache2 restart
   - ls -la $WP_CORE_DIR
   - curl http://localhost/wordpress
+  - cp $WP_CORE_DIR/wp-config-sample.php $WP_CORE_DIR/wp-config.php
   - wp plugin activate --path=$WP_CORE_DIR versionpress
   - wp vp activate --yes --path=$WP_CORE_DIR
   
