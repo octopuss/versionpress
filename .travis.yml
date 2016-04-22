@@ -54,6 +54,7 @@ install:
   - cp plugins/versionpress/bootstrap.php $WP_CORE_DIR/wp-content/plugins/versionpress/bootstrap.php
   - cp plugins/versionpress/versionpress.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress.php
   - cp plugins/versionpress/versionpress-functions.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress-functions.php
+  - ls -la $WP_CORE_DIR/wp-content/plugins/versionpress
 
   - cp -rip frontend/build/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/public/gui/
 
