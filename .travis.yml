@@ -1,5 +1,5 @@
 # run on container environment
-sudo: false
+sudo: required
 
 language: php
 
@@ -9,8 +9,6 @@ addons:
   apt:
     packages:
     - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
 
 cache:
   directories:
@@ -65,7 +63,6 @@ install:
 
   - wp plugin activate --path=$WP_CORE_DIR versionpress
   - wp vp activate --yes --path=$WP_CORE_DIR
-  #- sudo sed -i -e "s,/var/www/html,$WP_CORE_DIR,g" /etc/apache2/sites-available/000-default.conf
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$WP_CORE_DIR?g" --in-place /etc/apache2/sites-available/000-default.conf
   - cat /etc/apache2/sites-available/000-default.conf
