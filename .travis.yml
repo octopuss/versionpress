@@ -40,9 +40,8 @@ before_install:
 install:
   - nvm install node
   - npm install
-  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
-  - sudo apt-get install git
   - mysql -e "create database IF NOT EXISTS $DB_NAME;" -uroot;
+  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
   - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   - chmod +x wp-cli.phar
   - sudo mv wp-cli.phar /usr/local/bin/wp
