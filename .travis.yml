@@ -72,6 +72,7 @@ install:
   - sudo /etc/init.d/apache2 restart
   - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
 before_script:
+  - sudo chmod -R a+rwx $(pwd);
   - sudo chown -R www-data:travis $WP_CORE_DIR
   - curl http://localhost/wordpress 
   - curl http://localhost
