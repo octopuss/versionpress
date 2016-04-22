@@ -69,7 +69,7 @@ install:
 
   - wp plugin activate --path=$WP_CORE_DIR versionpress
   - wp vp activate --yes --path=$WP_CORE_DIR
-  - sudo sed -i -e "s,/var/www,$WP_CORE_DIR,g" /etc/apache2/sites-available/default
+  - sudo sed -i -e "s,/var/www,$WP_CORE_DIR,g" /etc/apache2/sites-available/000-default
   - sudo /etc/init.d/apache2 restart
 before_script:
 
