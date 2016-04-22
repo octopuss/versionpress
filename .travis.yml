@@ -44,7 +44,7 @@ install:
   - wp core install --url="http://localhost/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR
   - npm install -g gulp
   - cp plugins/versionpress/tests/test-config.sample.yml plugins/versionpress/tests/test-config.yml
-  - mkdir -p $WP_CORE_DIR/wp-content/plugins/versionpress/src/
+  - mkdir -p $WP_CORE_DIR/wp-content/plugins/versionpress/
   - cp -rip plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
   - cp -rip plugins/versionpress/admin/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/
   - cp -rip plugins/versionpress/temp/ $WP_CORE_DIR/wp-content/plugins/versionpress/temp/
