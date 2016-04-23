@@ -3,11 +3,11 @@ machine:
     Europe/Copenhagen
 
   environment:
-    - WP_CORE_DIR=/tmp/wordpress
-    - DB_NAME=wordpress_test
-    - DB_USER=root
-    - DB_PASSWORD=''
-    - DB=mysql  
+    - WP_CORE_DIR: /tmp/wordpress
+    - DB_NAME: wordpress_test
+    - DB_USER: root
+    - DB_PASSWORD: ''
+    - DB: mysql  
 
   php:
     version: 5.6.18
@@ -67,5 +67,5 @@ dependencies:
 
 test:
   override:
-    gulp --cwd plugins/versionpress/tests run-tests
+    - gulp --cwd plugins/versionpress/tests run-tests
   
