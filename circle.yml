@@ -32,13 +32,12 @@ dependencies:
     - sudo a2enmod rewrite
     - sudo service apache2 restart
     - nvm alias default 4.2.6
+    # Install node
+    - npm install -g gulp
  
 
   post:
-
    
-    # Install node
-    - npm install -g gulp
     # Clone versionpress
     - git clone https://github.com/versionpress/versionpress.git $WP_CORE_DIR
     - cd $WP_CORE_DIR
