@@ -3,9 +3,6 @@
   DocumentRoot "%TRAVIS_BUILD_DIR%"
   ServerName localhost
 
-  LoadModule php5_module /home/ubuntu/.phpenv/versions/7.0.3/libexec/apache2/libphp5.so
-
-
   <Directory %TRAVIS_BUILD_DIR%/*>
     Options FollowSymLinks
     AllowOverride None
@@ -15,6 +12,13 @@
   <FilesMatch \.php$>
     SetHandler application/x-httpd-php
   </FilesMatch>
+
+   <IfModule mod_fastcgi.c>
+    AddHandler php5-fcgi .php
+    Action php5-fcgi /php5-fcgi
+    Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
+    FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
+   </IfModule>
 
 
 </VirtualHost>
