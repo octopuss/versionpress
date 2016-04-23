@@ -27,13 +27,14 @@ dependencies:
     - sudo mv wp-cli.phar /usr/local/bin/wp
     - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/ci.conf
     - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$WP_CORE_DIR?g" --in-place /etc/apache2/sites-available/ci.conf
+ 
+
+  post:
     - cat /etc/apache2/sites-available/ci.conf
     - a2ensite ci
     - sudo service apache2 restart
     - nvm alias default 4.2.6
    
-
-  post:
     # Install node
     - npm install -g gulp
     # Clone versionpress
