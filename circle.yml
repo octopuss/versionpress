@@ -1,0 +1,71 @@
+machine:
+  timezone:
+    Europe/Copenhagen
+
+  environment:
+    - WP_CORE_DIR=/tmp/wordpress
+    - DB_NAME=wordpress_test
+    - DB_USER=root
+    - DB_PASSWORD=''
+    - DB=mysql  
+
+  php:
+    version: 5.6.18
+
+  # This will be added to the `/etc/hosts` file
+  hosts:
+    localhost: 127.0.0.1
+
+dependencies:
+  pre:
+    # No password is required for the MySQL user `ubuntu`
+    - mysql -u$DB_USER -e "create database $DB_NAME"
+
+    # Use cURL to fetch WP-CLI
+    - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    - chmod +x wp-cli.phar
+    - sudo mv wp-cli.phar /usr/local/bin/wp
+   
+    # Install node
+    - npm i gulp -g
+
+    # Clone versionpress
+    - git clone https://github.com/versionpress/versionpress.git $WP_CORE_DIR
+
+    - npm install $WP_CORE_DIR
+    - wp core download --path=$WP_CORE_DIR
+    - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=localhost --path=$WP_CORE_DIR --skip-check
+    - wp core install --url="http://localhost/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR --skip-email
+    - cp -rip plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
+    - cp -rip plugins/versionpress/admin/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/
+    - cp -rip plugins/versionpress/temp/ $WP_CORE_DIR/wp-content/plugins/versionpress/temp/
+    - cp -rip plugins/versionpress/log/ $WP_CORE_DIR/wp-content/plugins/versionpress/log/
+    - cp -rip plugins/versionpress/vendor/ $WP_CORE_DIR/wp-content/plugins/versionpress/vendor/
+    - cp plugins/versionpress/uninstall.php $WP_CORE_DIR/wp-content/plugins/versionpress/uninstall.php
+    - cp plugins/versionpress/bootstrap.php $WP_CORE_DIR/wp-content/plugins/versionpress/bootstrap.php
+    - cp plugins/versionpress/versionpress.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress.php
+    - cp plugins/versionpress/versionpress-functions.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress-functions.php
+    - cp plugins/versionpress/vpconfig.defaults.yml $WP_CORE_DIR/wp-content/plugins/versionpress/vpconfig.defaults.yml
+    
+    - cp -rip frontend/build/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/public/gui/
+
+    - wp plugin activate --path=$WP_CORE_DIR versionpress
+    - wp vp activate --yes --path=$WP_CORE_DIR
+
+  post:
+    - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+    - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$WP_CORE_DIR?g" --in-place /etc/apache2/sites-available/000-default.conf
+    - cat /etc/apache2/sites-available/000-default.conf
+    - sudo service apache2 restart
+    - 'sed -i.bak -e "s/end2end-test-type: .*/end2end-test-type: wp-cli/" plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s/dbname: .*/dbname: $DB_NAME/" plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s/user: .*/user: $DB_USER/" plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s/password: .*/password: $DB_PASSWORD/" plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s#path: .*#path: $WP_CORE_DIR#" plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s#url: .*#url: http://localhost/wordpress#" plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s#firefox-binary: .*#firefox-binary: /usr/local/bin/firefox#" plugins/versionpress/tests/test-config.yml'
+
+test:
+  override:
+    gulp --cwd plugins/versionpress/tests run-tests
+  
