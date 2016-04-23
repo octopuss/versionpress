@@ -20,7 +20,6 @@ dependencies:
   pre:
     # No password is required for the MySQL user `ubuntu`
     - mysql -u$DB_USER -e "create database $DB_NAME"
-    - sudo apt-get install libapache2-mod-php5
     # Use cURL to fetch WP-CLI
     - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     - chmod +x wp-cli.phar
@@ -28,7 +27,7 @@ dependencies:
     - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/ci.conf
     - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$WP_CORE_DIR?g" --in-place /etc/apache2/sites-available/ci.conf
     - cat /etc/apache2/sites-available/ci.conf
-    - rm /etc/apache2/apache2.conf
+    - sudo rm -f /etc/apache2/apache2.conf
     - sudo a2enmod rewrite
     - sudo a2ensite ci
     - sudo service apache2 restart
