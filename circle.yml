@@ -24,10 +24,15 @@ dependencies:
     - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     - chmod +x wp-cli.phar
     - sudo mv wp-cli.phar /usr/local/bin/wp
+    - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+    - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$WP_CORE_DIR?g" --in-place /etc/apache2/sites-available/000-default.conf
+    - cat /etc/apache2/sites-available/000-default.conf
+    - sudo service apache2 restart
    
-    # Install node
-    - npm install gulp
 
+  post:
+    # Install node
+    - npm install -g gulp
     # Clone versionpress
     - git clone https://github.com/versionpress/versionpress.git $WP_CORE_DIR
     - cd $WP_CORE_DIR
@@ -50,12 +55,7 @@ dependencies:
 
     - wp plugin activate --path=$WP_CORE_DIR versionpress
     - wp vp activate --yes --path=$WP_CORE_DIR
-
-  post:
-    - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
-    - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$WP_CORE_DIR?g" --in-place /etc/apache2/sites-available/000-default.conf
-    - cat /etc/apache2/sites-available/000-default.conf
-    - sudo service apache2 restart
+    
     - 'sed -i.bak -e "s/end2end-test-type: .*/end2end-test-type: wp-cli/" plugins/versionpress/tests/test-config.yml'
     - 'sed -i.bak -e "s/dbname: .*/dbname: $DB_NAME/" plugins/versionpress/tests/test-config.yml'
     - 'sed -i.bak -e "s/user: .*/user: $DB_USER/" plugins/versionpress/tests/test-config.yml'
