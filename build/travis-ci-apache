@@ -3,13 +3,15 @@
   DocumentRoot "%TRAVIS_BUILD_DIR%"
   ServerName localhost
 
+  LoadModule php5_module /home/ubuntu/.phpenv/versions/5.6.18/libexec/apache2/libphp5.so
+
 
   <Directory %TRAVIS_BUILD_DIR%/*>
     Options FollowSymLinks
     AllowOverride None
     RewriteEngine On
   </Directory>
-  
+
   <FilesMatch \.php$>
     SetHandler application/x-httpd-php
   </FilesMatch>

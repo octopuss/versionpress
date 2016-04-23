@@ -34,12 +34,12 @@ dependencies:
     - nvm alias default 4.2.6
     # Install node
     - npm install -g gulp
- 
+    - git clone https://github.com/versionpress/versionpress.git $WP_CORE_DIR
 
   post:
    
     # Clone versionpress
-    - git clone https://github.com/versionpress/versionpress.git $WP_CORE_DIR
+    
     - cd $WP_CORE_DIR
     - npm install
     - wp core download --path=$WP_CORE_DIR
