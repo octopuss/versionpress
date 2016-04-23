@@ -25,16 +25,17 @@ dependencies:
     - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     - chmod +x wp-cli.phar
     - sudo mv wp-cli.phar /usr/local/bin/wp
-   
- 
-
-  post:
     - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/ci.conf
     - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$WP_CORE_DIR?g" --in-place /etc/apache2/sites-available/ci.conf
     - cat /etc/apache2/sites-available/ci.conf
-    - a2ensite ci
+    - sudo a2ensite ci
+    - sudo a2enmod rewrite
     - sudo service apache2 restart
     - nvm alias default 4.2.6
+ 
+
+  post:
+
    
     # Install node
     - npm install -g gulp
