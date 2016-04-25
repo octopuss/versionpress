@@ -46,7 +46,8 @@ dependencies:
    
     # Clone versionpress
     
-    - cd $VP_CLONE_DIR && npm install && composer install
+    - cd $VP_CLONE_DIR && npm install 
+    - cd $VP_CLONE_DIR/plugins/versionpress composer install
     - wp core download --path=$WP_CORE_DIR
     - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=$WP_CORE_DIR --skip-check
     - wp core install --url="http://localht/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR --skip-email
