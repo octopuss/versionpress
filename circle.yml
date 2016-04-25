@@ -78,5 +78,5 @@ dependencies:
    
 test:
   override:
-    - gulp --cwd plugins/versionpress/tests run-tests
+    - gulp --cwd $VP_CLONE_DIR/plugins/versionpress/tests run-tests
   
