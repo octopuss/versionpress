@@ -66,10 +66,10 @@ dependencies:
     - wp plugin activate --path=$WP_CORE_DIR versionpress
     - wp vp activate --yes --path=$WP_CORE_DIR
     
-    - 'sed -i.bak -e "s/end2end-test-type: .*/end2end-test-type: wp-cli/"$VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
-    - 'sed -i.bak -e "s/dbname: .*/dbname: $DB_NAME/" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
-    - 'sed -i.bak -e "s/user: .*/user: $DB_USER/" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
-    - 'sed -i.bak -e "s/password: .*/password: $DB_PASSWORD/" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s#end2end-test-type: .*#end2end-test-type: wp-cli#"$VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s#dbname: .*#dbname: $DB_NAME#" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s#user: .*#user: $DB_USER#" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
+    - 'sed -i.bak -e "s#password: .*#password: $DB_PASSWORD#" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
     - 'sed -i.bak -e "s#path: .*#path: $WP_CORE_DIR#" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
     - 'sed -i.bak -e "s#url: .*#url: http://localhost/wordpress#" plugins/versionpress/tests/test-config.yml'
     - 'sed -i.bak -e "s#firefox-binary: .*#firefox-binary: /usr/local/bin/firefox#" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
