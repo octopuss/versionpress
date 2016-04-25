@@ -49,7 +49,8 @@ dependencies:
     - npm install
     - wp core download --path=$WP_CORE_DIR
     - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=$WP_CORE_DIR --skip-check
-    - wp core install --url="http://localhost/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR --skip-email
+    - wp core install --url="http://localht/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR --skip-email
+    - mkdir -p $WP_CORE_DIR/wp-content/plugins/versionpress/
     - cp -rip $VP_CLONE_DIR/plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
     - cp -rip $VP_CLONE_DIR/plugins/versionpress/admin/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/
     - cp -rip $VP_CLONE_DIR/plugins/versionpress/temp/ $WP_CORE_DIR/wp-content/plugins/versionpress/temp/
