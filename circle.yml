@@ -33,6 +33,7 @@ dependencies:
     - 'sudo sed -i.bak -e "s#listen = .*#listen = /var/run/php5-fpm.sock#" /etc/php5/fpm/pool.d/www.conf'
     - cat /etc/php5/fpm/pool.d/www.conf
     - cat /etc/nginx/sites-available/ci.conf
+    - sudo service apache2 stop
     - sudo service nginx restart
     - sudo service php5-fpm restart
    
