@@ -24,6 +24,7 @@ dependencies:
     - mysql -u$DB_USER -e "create database $DB_NAME"
     - sudo apt-get update
     - sudo apt-get install nginx php5-fpm
+    - touch ~/.phpenv/versions/$(phpenv global)/etc/conf.d/php.ini
     - echo "date.timezone = Europe/Prague" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/php.ini
     # Use cURL to fetch WP-CLI
     - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
