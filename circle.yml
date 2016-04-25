@@ -39,7 +39,7 @@ dependencies:
     - nvm alias default 4.2.6
     # Install node
     - npm install -g gulp
-    - git clone https://github.com/versionpress/versionpress.git VP_CLONE_DIR
+    - git clone https://github.com/versionpress/versionpress.git $VP_CLONE_DIR
 
   post:
    
