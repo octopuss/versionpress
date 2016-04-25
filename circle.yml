@@ -37,7 +37,7 @@ dependencies:
     - sudo service apache2 stop
     - sudo service nginx restart
     - sudo service php5-fpm restart
-    - sudo php -n -d extension=needed_ext.so composer.phar
+    - sudo php5dismod -s cli xdebug
     - nvm alias default 4.2.6
     # Install node
     - npm install -g gulp
