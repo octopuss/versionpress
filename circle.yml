@@ -1,6 +1,6 @@
 machine:
   timezone:
-    Europe/Copenhagen
+    Europe/Prague
 
   environment:
     WP_CORE_DIR: /tmp/wordpress
@@ -24,6 +24,7 @@ dependencies:
     - mysql -u$DB_USER -e "create database $DB_NAME"
     - sudo apt-get update
     - sudo apt-get install nginx php5-fpm
+    - echo "date.timezone = Europe/Prague" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/php.ini
     # Use cURL to fetch WP-CLI
     - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     - chmod +x wp-cli.phar
@@ -41,9 +42,6 @@ dependencies:
     # Install node
     - npm install -g gulp
     - git clone https://github.com/versionpress/versionpress.git $VP_CLONE_DIR
-    - cd $VP_CLONE_DIR/plugins/versionpress composer install
-    - pwd
-    - cd $VP_CLONE_DIR && npm install 
     - wp core download --path=$WP_CORE_DIR
     - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=$WP_CORE_DIR --skip-check
     - wp core install --url="http://localht/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR --skip-email
@@ -56,7 +54,9 @@ dependencies:
     - 'sudo sed -i.bak -e "s#path: .*#path: $WP_CORE_DIR#" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
     - 'sudo sed -i.bak -e "s#url: .*#url: http://localhost/wordpress#" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
     - 'sudo sed -i.bak -e "s#firefox-binary: .*#firefox-binary: /usr/local/bin/firefox#" $VP_CLONE_DIR/plugins/versionpress/tests/test-config.yml'
-
+    - cd $VP_CLONE_DIR/plugins/versionpress composer install
+    - pwd
+    - cd $VP_CLONE_DIR && npm install 
 
   post:
     - cp -rip $VP_CLONE_DIR/plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
