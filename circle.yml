@@ -45,7 +45,7 @@ dependencies:
    
     # Clone versionpress
     
-    - cd $WP_CLONE_DIR
+    - cd $VP_CLONE_DIR
     - npm install
     - wp core download --path=$WP_CORE_DIR
     - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=$WP_CORE_DIR --skip-check
