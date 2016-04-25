@@ -4,6 +4,7 @@ machine:
 
   environment:
     WP_CORE_DIR: /tmp/wordpress
+    VP_CLONE_DIR: /tmp/versionpress
     DB_NAME: wordpress_test
     DB_USER: root
     DB: mysql  
@@ -38,29 +39,29 @@ dependencies:
     - nvm alias default 4.2.6
     # Install node
     - npm install -g gulp
-    - git clone https://github.com/versionpress/versionpress.git $WP_CORE_DIR
+    - git clone https://github.com/versionpress/versionpress.git VP_CLONE_DIR
 
   post:
    
     # Clone versionpress
     
-    - cd $WP_CORE_DIR
+    - cd $WP_CLONE_DIR
     - npm install
     - wp core download --path=$WP_CORE_DIR
     - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=$WP_CORE_DIR --skip-check
     - wp core install --url="http://localhost/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR --skip-email
-    - cp -rip plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
-    - cp -rip plugins/versionpress/admin/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/
-    - cp -rip plugins/versionpress/temp/ $WP_CORE_DIR/wp-content/plugins/versionpress/temp/
-    - cp -rip plugins/versionpress/log/ $WP_CORE_DIR/wp-content/plugins/versionpress/log/
-    - cp -rip plugins/versionpress/vendor/ $WP_CORE_DIR/wp-content/plugins/versionpress/vendor/
-    - cp plugins/versionpress/uninstall.php $WP_CORE_DIR/wp-content/plugins/versionpress/uninstall.php
-    - cp plugins/versionpress/bootstrap.php $WP_CORE_DIR/wp-content/plugins/versionpress/bootstrap.php
-    - cp plugins/versionpress/versionpress.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress.php
-    - cp plugins/versionpress/versionpress-functions.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress-functions.php
-    - cp plugins/versionpress/vpconfig.defaults.yml $WP_CORE_DIR/wp-content/plugins/versionpress/vpconfig.defaults.yml
+    - cp -rip $VP_CLONE_DIR/plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
+    - cp -rip $VP_CLONE_DIR/plugins/versionpress/admin/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/
+    - cp -rip $VP_CLONE_DIR/plugins/versionpress/temp/ $WP_CORE_DIR/wp-content/plugins/versionpress/temp/
+    - cp -rip $VP_CLONE_DIR/plugins/versionpress/log/ $WP_CORE_DIR/wp-content/plugins/versionpress/log/
+    - cp -rip $VP_CLONE_DIR/plugins/versionpress/vendor/ $WP_CORE_DIR/wp-content/plugins/versionpress/vendor/
+    - cp $VP_CLONE_DIR/plugins/versionpress/uninstall.php $WP_CORE_DIR/wp-content/plugins/versionpress/uninstall.php
+    - cp $VP_CLONE_DIR/plugins/versionpress/bootstrap.php $WP_CORE_DIR/wp-content/plugins/versionpress/bootstrap.php
+    - cp $VP_CLONE_DIR/plugins/versionpress/versionpress.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress.php
+    - cp $VP_CLONE_DIR/plugins/versionpress/versionpress-functions.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress-functions.php
+    - cp $VP_CLONE_DIR/plugins/versionpress/vpconfig.defaults.yml $WP_CORE_DIR/wp-content/plugins/versionpress/vpconfig.defaults.yml
     
-    - cp -rip frontend/build/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/public/gui/
+    - cp -rip $VP_CLONE_DIR/frontend/build/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/public/gui/
 
     - wp plugin activate --path=$WP_CORE_DIR versionpress
     - wp vp activate --yes --path=$WP_CORE_DIR
