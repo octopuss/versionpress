@@ -7,6 +7,7 @@ machine:
     DB_NAME: wordpress_test
     DB_USER: root
     DB: mysql  
+    DB_HOST: 127.0.0.1
 
   php:
     version: 5.6.18
@@ -46,7 +47,7 @@ dependencies:
     - cd $WP_CORE_DIR
     - npm install
     - wp core download --path=$WP_CORE_DIR
-    - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=localhost --path=$WP_CORE_DIR --skip-check
+    - wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=$WP_CORE_DIR --skip-check
     - wp core install --url="http://localhost/wordpress" --title="Title" --admin_user="admin" --admin_password="admin" --admin_email="admin@domain.com" --path=$WP_CORE_DIR --skip-email
     - cp -rip plugins/versionpress/src/ $WP_CORE_DIR/wp-content/plugins/versionpress/src/
     - cp -rip plugins/versionpress/admin/ $WP_CORE_DIR/wp-content/plugins/versionpress/admin/
