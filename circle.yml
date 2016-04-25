@@ -20,6 +20,7 @@ dependencies:
   pre:
     # No password is required for the MySQL user `ubuntu`
     - mysql -u$DB_USER -e "create database $DB_NAME"
+    - sudo apt-get update
     - sudo apt-get install nginx php5-fpm
     # Use cURL to fetch WP-CLI
     - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
