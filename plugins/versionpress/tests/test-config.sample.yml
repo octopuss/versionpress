@@ -33,7 +33,7 @@ sites:
     host: localhost
     db:
       # Database should be created. VersionPress does not create it
-      host: localhost
+      host: 127.0.0.1
       dbname: vp01
       user: vp01
       password: vp01
