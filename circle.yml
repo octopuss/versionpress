@@ -67,7 +67,7 @@ dependencies:
     - cp $VP_CLONE_DIR/plugins/versionpress/uninstall.php $WP_CORE_DIR/wp-content/plugins/versionpress/uninstall.php
     - cp $VP_CLONE_DIR/plugins/versionpress/bootstrap.php $WP_CORE_DIR/wp-content/plugins/versionpress/bootstrap.php
     - cp $VP_CLONE_DIR/plugins/versionpress/versionpress.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress.php
-    - cp $VP_CLONE_DIR/plugins/versionpress/versionpress.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress.php
+    - cp $VP_CLONE_DIR/plugins/versionpress/setup-hooks.php $WP_CORE_DIR/wp-content/plugins/versionpress/setup-hooks.php
     - cp $VP_CLONE_DIR/plugins/versionpress/versionpress-functions.php $WP_CORE_DIR/wp-content/plugins/versionpress/versionpress-functions.php
     - cp $VP_CLONE_DIR/plugins/versionpress/vpconfig.defaults.yml $WP_CORE_DIR/wp-content/plugins/versionpress/vpconfig.defaults.yml
     
